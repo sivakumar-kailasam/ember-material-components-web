@@ -29,16 +29,33 @@ export default Ember.Component.extend(MDCComponent, {
    * @param {Object} evtData
    */
   onchange: x => x,
+  /**
+   * @type {Function}
+   */
+  'register-tab-bar': x => x,
+  /**
+   * @type {Function}
+   */
+  'deregister-tab-bar': x => x,
   //endregion
 
   //region Ember Hooks
   layout,
   classNames: ['mdc-tab-bar'],
   classNameBindings: ['isIconsOnly:mdc-tab-bar--icon-tab-bar', 'isIconsWithText:mdc-tab-bar--icons-with-text', 'mdcClassNames'],
+  attributeBindings: ['style'],
   init() {
     this._super(...arguments);
     set(this, 'tabs', Ember.A([]));
     set(this, 'mdcIndicatorStyles', {});
+  },
+  didInsertElement() {
+    this._super(...arguments);
+    get(this, 'register-tab-bar')(this);
+  },
+  willDestroyElement() {
+    this._super(...arguments);
+    get(this, 'deregister-tab-bar')();
   },
   //endregion
 
@@ -80,7 +97,7 @@ export default Ember.Component.extend(MDCComponent, {
       setPreventDefaultOnClickForTabAtIndex: (index, preventDefaultOnClick) => Ember.run(() => set(this.tabAt(index), 'preventDefaultOnClick', preventDefaultOnClick)),
       measureTabAtIndex: (index) => this.tabAt(index).measureSelf(),
       getComputedWidthForTabAtIndex: (index) => getComponentProperty(this.tabAt(index), 'computedWidth', 0),
-      getComputedLeftForTabAtIndex: (index) => getComponentProperty(this.tabAt(index), 'computedLeft', 0),
+      getComputedLeftForTabAtIndex: (index) => getComponentProperty(this.tabAt(index), 'computedLeft', 0)
     });
   },
   tabAt(index) {
