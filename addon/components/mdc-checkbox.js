@@ -1,10 +1,11 @@
 import Ember from 'ember';
 import layout from '../templates/components/mdc-checkbox';
 import { addClass, removeClass, MDCComponent } from '../mixins/mdc-component';
+import getElementProperty from '../utils/get-element-property';
 import { MDCCheckboxFoundation } from '@material/checkbox';
 
 const { ANIM_END_EVENT_NAME } = MDCCheckboxFoundation.strings;
-const { get, set } = Ember;
+const { get, set, run } = Ember;
 
 export default Ember.Component.extend(MDCComponent, {
   //region Attributes
@@ -77,35 +78,16 @@ export default Ember.Component.extend(MDCComponent, {
    * @returns {MDCCheckboxFoundation}
    */
   createFoundation() {
-    const component = this;
     return new MDCCheckboxFoundation({
-      addClass(className) {
-        addClass(className, component);
-      },
-      removeClass(className) {
-        removeClass(className, component);
-      },
-      registerAnimationEndHandler(handler) {
-        component.get('element').addEventListener(ANIM_END_EVENT_NAME, handler);
-      },
-      deregisterAnimationEndHandler(handler) {
-        component.get('element').removeEventListener(ANIM_END_EVENT_NAME, handler);
-      },
-      registerChangeHandler(handler) {
-        component.get('changeHandlers').addObject(handler);
-      },
-      deregisterChangeHandler(handler) {
-        component.get('changeHandlers').removeObject(handler);
-      },
-      getNativeControl() {
-        return component.$('input').get(0);
-      },
-      forceLayout() {
-        return;
-      },
-      isAttachedToDOM() {
-        return !!component.get('element');
-      }
+      addClass: (className) => run(() => addClass(className, this)),
+      removeClass: (className) => run(() => removeClass(className, this)),
+      registerAnimationEndHandler: (handler) => getElementProperty(this, 'addEventListener', () => null)(ANIM_END_EVENT_NAME, handler),
+      deregisterAnimationEndHandler: (handler) => getElementProperty(this, 'removeEventListener', () => null)(ANIM_END_EVENT_NAME, handler),
+      registerChangeHandler: (handler) => run(() => get(this, 'changeHandlers').addObject(handler)),
+      deregisterChangeHandler: (handler) => run(() => get(this, 'changeHandlers').removeObject(handler)),
+      getNativeControl: () => this.$('input').get(0),
+      forceLayout: () => undefined,
+      isAttachedToDOM: () => !!get(this, 'element')
     });
   },
   //endregion

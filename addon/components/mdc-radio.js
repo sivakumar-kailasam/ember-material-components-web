@@ -61,7 +61,7 @@ export default Ember.Component.extend(MDCComponent, {
       isSurfaceActive: () => false,
       computeBoundingRect: () => {
         const size = 40;
-        const { left, top } = get(this, 'element').getBoundingClientRect();
+        const { left, top } = getElementProperty(this, 'getBoundingClientRect', () => ({ top: 0, left: 0, bottom: 0, right: 0, width: 0, height: 0 }))();
         return {
           top,
           left,
