@@ -1,5 +1,25 @@
 # MDC-Ember Changelog
 
+### 0.0.36 Emerald English setter (September 7, 2017)
+
+- :arrow_up: Upgrade @material packages to 0.19 versions
+    - :boom: Change "accent" to "secondary" globally, as done by MDC-Web.
+      https://github.com/material-components/material-components-web/pull/1116
+    - :sparkles: `{{mdc-button}}` now has `unelevated` boolean attribute (default: `false`)
+    - :sparkles: `{{mdc-button}}` now has `dense` boolean attribute (default: `false`)
+    - :sparkles: `{{mdc-button}}` now has `compact` boolean attribute (default: `false`)
+    - :sparkles: `{{mdc-textfield}}` now has `box` boolean attribute (default: `false`)
+- :bug: `{{mdc-checkbox}}`, `{{mdc-radio}}`, and `{{mdc-switch}}` now respect checked attr (#29)
+- :green_heart: Switch CI to use Headless Chrome (#28)
+- :sparkles: Event bubbling can be disabled for checkboxes, radio buttons, and switches (#27)
+
+#### Breaking Changes
+- :boom: In the spec, "accent" color was renamed to "secondary" to be more
+  semantically correct. All occurrences of the word "accent" have been
+  changed to "secondary", in line with MDC-Web's [breaking
+  change](https://github.com/material-components/material-components-web/pull/1116)
+  to @material/theme.
+
 ### 0.0.35 Diamond Doberman (August 30, 2017)
 
 - :bug: Fix unsafe HTML element access
