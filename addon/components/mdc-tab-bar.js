@@ -6,7 +6,7 @@ import getElementProperty from '../utils/get-element-property';
 import getComponentProperty from '../utils/get-component-property';
 import styleComputed from '../utils/style-computed';
 
-const { computed, get, set } = Ember;
+const { computed, observer, get, set } = Ember;
 const { strings } = MDCTabBarFoundation;
 
 export default Ember.Component.extend(MDCComponent, {
@@ -82,6 +82,19 @@ export default Ember.Component.extend(MDCComponent, {
   isIconsWithText: computed.equal('icons', 'with-text'),
   //endregion
 
+  //region Observers
+  tabsChanged: observer('tabs.@each.foundation', function() {
+    // When a tab is first rendered, its computed measurements are zero. It relies on the tab bar to tell it to find
+    // its correct measurements. When the tabs swap out however, they don't know to go find their measurements. So
+    // we must trigger the tab bar to inform its new tabs of their measurements.
+    get(this, 'tabs').forEach(tab => tab.measureSelf());
+    // then we need to reset the indicator styles
+    if (get(this, 'foundation')) {
+      get(this, 'foundation').layout();
+    }
+  }),
+  //endregion
+
   //region Method
   createFoundation() {
     return new MDCTabBarFoundation({
@@ -110,7 +123,12 @@ export default Ember.Component.extend(MDCComponent, {
   },
   setTabActiveAtIndex(index, isActive) {
     if (get(this, 'links')) {
-      this.tabAt(index)._invoke({ stopPropagation() {}, preventDefault() {} }); // TODO: Probably shouldn't be calling private APIs or stubbing events
+      if (this.tabAt(index) && isActive) {
+        this.tabAt(index)._invoke({ stopPropagation() {}, preventDefault() {} }); // TODO: Probably shouldn't be calling private APIs or stubbing events
+        if (get(this, 'scroll-active-tab-into-view')) {
+          get(this, 'scroll-active-tab-into-view')(index);
+        }
+      }
     }
     else {
       get(this.tabAt(index), 'become-active')(isActive);
@@ -134,7 +152,12 @@ export default Ember.Component.extend(MDCComponent, {
       get(this, 'tabs').removeObject(tab);
     },
     switchToTab(tab) {
-      Ember.run.next(() => get(this, 'foundation').switchToTabAtIndex(get(this, 'tabs').indexOf(tab), true));
+      Ember.run.next(() => get(this, 'tabs.length') ? get(this, 'foundation').switchToTabAtIndex(get(this, 'tabs').indexOf(tab), true) : null);
+    },
+    scrollTabIntoView(tab) {
+      if (get(this, 'scroll-active-tab-into-view')) {
+        Ember.run.next(() => get(this, 'tabs.length') ? get(this, 'scroll-active-tab-into-view')(get(this, 'tabs').indexOf(tab)) : null);
+      }
     }
   }
   //endregion

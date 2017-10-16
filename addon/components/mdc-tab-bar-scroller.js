@@ -144,6 +144,16 @@ export default Ember.Component.extend(MDCComponent, {
     },
     deregisterTabBar() {
       set(this, 'tab-bar', null);
+    },
+    scrollActiveTabIntoView(index) {
+      // TODO: Need to submit an issue asking Google to make a scroll method that only triggers if tab is hidden, must do this until then
+      const scrollerRightBoundary = this.$('.mdc-tab-bar-scroller__scroll-frame')[0].getBoundingClientRect().right;
+      const scrollerLeftBoundary = this.$('.mdc-tab-bar-scroller__scroll-frame')[0].getBoundingClientRect().left;
+      const tabRightBoundary = get(this, 'tab-bar').tabAt(index).$()[0].getBoundingClientRect().right;
+      const tabLeftBoundary = get(this, 'tab-bar').tabAt(index).$()[0].getBoundingClientRect().left;
+      if ((tabRightBoundary > scrollerRightBoundary) || (tabLeftBoundary < scrollerLeftBoundary)) {
+        get(this, 'foundation').scrollToTabAtIndex(index);
+      }
     }
   }
   //endregion
