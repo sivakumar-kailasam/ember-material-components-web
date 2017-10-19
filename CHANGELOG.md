@@ -1,5 +1,27 @@
 # MDC-Ember Changelog
 
+### 0.0.37 Feldspar French bulldog (October 19, 2017)
+
+- :bug: {{mdc-tab}} indicator fixes (#31)
+- :wrench: Use unminified js/css in non-prod environments (#46)
+- :memo: Add contributor gallery to README (#40)
+- :sparkles: Implement {{mdc-layout-grid}} (#42)
+- :sparkles: Implement {{mdc-grid-list}} (#43)
+- :bug: :memo: Fix toolbar bug, add toolbar docs. (#37)
+- :bulb: :memo: Update documentation to use ember-freestyle (#44)
+- :bug: {{mdc-textfield}}'s placeholder and value no longer overlap (#41)
+- :boom: {{mdc-card}}'s children now yield their own children (#39)
+- :sparkles: {{mdc-textfield}} exposes event handlers (#38)
+- :sparkles: {{mdc-list}} now yields text and secondary text (#36)
+- :memo: Create CODE_OF_CONDUCT.md (#35)
+
+#### Breaking Changes
+
+- :boom: {{mdc-card}}'s children now yield their own children (#39).
+  If you were previously using the `{{mdc-card}}` family of components,
+  this will require a minor change to your application.
+
+
 ### 0.0.36 Emerald English setter (September 7, 2017)
 
 - :arrow_up: Upgrade @material packages to 0.19 versions
