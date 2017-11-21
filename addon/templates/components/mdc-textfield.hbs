@@ -19,7 +19,7 @@
       oninput=(action "handleInput")
       onkeydown=(action "handle" "keydown")
       required=required
-      placeholder=(if isFocused placeholder)
+      placeholder=(if label (if isFocused placeholder) placeholder)
       disabled=disabled
       readonly=readonly
       type=type
