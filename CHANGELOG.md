@@ -1,5 +1,10 @@
 # MDC-Ember Changelog
 
+### 0.0.38 Garnet Greyhound (December 18, 2017)
+
+- :sparkles: Binds the `tabindex` attribute
+- :sparkles: Adds `disable-focus` attribute to `mdc-menu` to disable focusing on menu open
+
 ### 0.0.37 Feldspar French bulldog (October 19, 2017)
 
 - :bug: {{mdc-tab}} indicator fixes (#31)
