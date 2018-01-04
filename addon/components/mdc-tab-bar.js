@@ -6,7 +6,7 @@ import getElementProperty from '../utils/get-element-property';
 import getComponentProperty from '../utils/get-component-property';
 import styleComputed from '../utils/style-computed';
 
-const { computed, get, observer, run, set } = Ember;
+const { computed, get, getProperties, observer, run, set } = Ember;
 const { strings } = MDCTabBarFoundation;
 
 export default Ember.Component.extend(MDCComponent, {
@@ -87,10 +87,11 @@ export default Ember.Component.extend(MDCComponent, {
     // When a tab is first rendered, its computed measurements are zero. It relies on the tab bar to tell it to find
     // its correct measurements. When the tabs swap out however, they don't know to go find their measurements. So
     // we must trigger the tab bar to inform its new tabs of their measurements.
-    get(this, 'tabs').forEach(tab => tab.measureSelf());
+    const { tabs, foundation } = getProperties(this, 'tabs', 'foundation');
+    tabs.forEach(tab => tab.measureSelf());
     // then we need to reset the indicator styles
-    if (get(this, 'foundation')) {
-      get(this, 'foundation').layout();
+    if (foundation) {
+      foundation.layout();
     }
   }),
   //endregion
@@ -98,8 +99,8 @@ export default Ember.Component.extend(MDCComponent, {
   //region Method
   createFoundation() {
     return new MDCTabBarFoundation({
-      addClass: (className) => Ember.run(() => get(this, 'mdcClasses').addObject(className)),
-      removeClass: (className) => Ember.run(() => get(this, 'mdcClasses').removeObject(className)),
+      addClass: (className) => run(() => get(this, 'mdcClasses').addObject(className)),
+      removeClass: (className) => run.next(this, function(){ get(this, 'mdcClasses').removeObject(className); }), //use non-arrow function for `run.next` since we are passing in the context
       bindOnMDCTabSelectedEvent: () => null, // no-op because this is bound with Ember actions
       unbindOnMDCTabSelectedEvent: () => null, // no-op because this is bound with Ember actions
       registerResizeHandler: (handler) => window.addEventListener('resize', handler),
@@ -112,7 +113,7 @@ export default Ember.Component.extend(MDCComponent, {
       isTabActiveAtIndex: (index) => this.isTabActiveAtIndex(index),
       setTabActiveAtIndex: (index, isActive) => this.setTabActiveAtIndex(index, isActive),
       isDefaultPreventedOnClickForTabAtIndex: (index) => get(this.tabAt(index), 'preventDefaultOnClick'),
-      setPreventDefaultOnClickForTabAtIndex: (index, preventDefaultOnClick) => Ember.run(() => set(this.tabAt(index), 'preventDefaultOnClick', preventDefaultOnClick)),
+      setPreventDefaultOnClickForTabAtIndex: (index, preventDefaultOnClick) => run(() => set(this.tabAt(index), 'preventDefaultOnClick', preventDefaultOnClick)),
       measureTabAtIndex: (index) => this.tabAt(index).measureSelf(),
       getComputedWidthForTabAtIndex: (index) => getComponentProperty(this.tabAt(index), 'computedWidth', 0),
       getComputedLeftForTabAtIndex: (index) => getComponentProperty(this.tabAt(index), 'computedLeft', 0)
@@ -129,8 +130,7 @@ export default Ember.Component.extend(MDCComponent, {
           get(this, 'scroll-active-tab-into-view')(index);
         }
       }
-    }
-    else {
+    } else {
       get(this.tabAt(index), 'become-active')(isActive);
     }
   },
@@ -142,8 +142,9 @@ export default Ember.Component.extend(MDCComponent, {
   //region Actions
   actions: {
     tabSelected({ tab }, shouldNotifyChange) {
-      const index = get(this, 'tabs').indexOf(tab);
-      Ember.run(() => get(this, 'foundation').switchToTabAtIndex(index, shouldNotifyChange));
+      const { tabs, foundation } = getProperties(this, 'tabs', 'foundation');
+      const index = tabs.indexOf(tab);
+      run(() => foundation && foundation.switchToTabAtIndex(index, shouldNotifyChange));
     },
     registerTab(tab) {
       get(this, 'tabs').addObject(tab);
@@ -152,11 +153,11 @@ export default Ember.Component.extend(MDCComponent, {
       get(this, 'tabs').removeObject(tab);
     },
     switchToTab(tab) {
-      Ember.run.next(() => get(this, 'tabs.length') ? get(this, 'foundation').switchToTabAtIndex(get(this, 'tabs').indexOf(tab), true) : null);
+      run.next(() => get(this, 'tabs.length') ? get(this, 'foundation').switchToTabAtIndex(get(this, 'tabs').indexOf(tab), true) : null);
     },
     scrollTabIntoView(tab) {
       if (get(this, 'scroll-active-tab-into-view')) {
-        Ember.run.next(() => get(this, 'tabs.length') ? get(this, 'scroll-active-tab-into-view')(get(this, 'tabs').indexOf(tab)) : null);
+        run.next(() => get(this, 'tabs.length') ? get(this, 'scroll-active-tab-into-view')(get(this, 'tabs').indexOf(tab)) : null);
       }
     }
   }
