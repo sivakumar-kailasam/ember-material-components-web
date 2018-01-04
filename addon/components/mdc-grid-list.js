@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get, computed } from '@ember/object';
 import layout from '../templates/components/mdc-grid-list';
 
-const { computed, get } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   //region Ember Hooks
   layout,
   classNames: ['mdc-grid-list'],

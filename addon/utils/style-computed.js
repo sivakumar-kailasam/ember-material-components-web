@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import { htmlSafe } from '@ember/string';
+import { get, computed } from '@ember/object';
 
-const { get } = Ember;
-
-export default prop => Ember.computed(`${prop}`, function() {
-  return Ember.String.htmlSafe(Object.keys(get(this, prop)).reduce((acc, key) => `${acc} ${key}: ${get(this, `${prop}.${key}`)};`, ''));
+export default prop => computed(`${prop}`, function() {
+  return htmlSafe(Object.keys(get(this, prop)).reduce((acc, key) => `${acc} ${key}: ${get(this, `${prop}.${key}`)};`, ''));
 });

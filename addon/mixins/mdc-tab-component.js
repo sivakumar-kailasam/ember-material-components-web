@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import Mixin from '@ember/object/mixin';
+import { get, computed } from '@ember/object';
 import { MDCTabFoundation } from '@material/tabs';
 import { MDCComponent } from '../mixins/mdc-component';
 import layout from '../templates/components/mdc-tab-bar/tab';
 
-const { get } = Ember;
-
-export default Ember.Mixin.create(MDCComponent, {
+export default Mixin.create(MDCComponent, {
   //region Ember Hooks
   layout,
   classNames: ['mdc-tab'],
@@ -40,7 +40,7 @@ export default Ember.Mixin.create(MDCComponent, {
   /**
    * @returns {Boolean}
    */
-  preventDefaultOnClick: Ember.computed({
+  preventDefaultOnClick: computed({
     get() {
       return get(this, 'foundation').preventsDefaultOnClick();
     },
@@ -52,7 +52,7 @@ export default Ember.Mixin.create(MDCComponent, {
   /**
    * @returns {Number}
    */
-  computedWidth: Ember.computed(function() {
+  computedWidth: computed(function() {
     const foundation = get(this, 'foundation');
     if (foundation) {
       return foundation.getComputedWidth();
@@ -61,7 +61,7 @@ export default Ember.Mixin.create(MDCComponent, {
   /**
    * @returns {Number}
    */
-  computedLeft: Ember.computed(function() {
+  computedLeft: computed(function() {
     const foundation = get(this, 'foundation');
     if (foundation) {
       return foundation.getComputedLeft();
@@ -72,8 +72,8 @@ export default Ember.Mixin.create(MDCComponent, {
   //region Methods
   createFoundation() {
     return new MDCTabFoundation({
-      addClass: (className) => Ember.run(() => get(this, 'mdcClasses').addObject(className)),
-      removeClass: (className) => Ember.run(() => get(this, 'mdcClasses').removeObject(className)),
+      addClass: (className) => run(() => get(this, 'mdcClasses').addObject(className)),
+      removeClass: (className) => run(() => get(this, 'mdcClasses').removeObject(className)),
       registerInteractionHandler: (type, handler) => this.registerMdcInteractionHandler(type, handler),
       deregisterInteractionHandler: (type, handler) => this.deregisterMdcInteractionHandler(type, handler),
       getOffsetWidth: () => get(this, 'element').offsetWidth,

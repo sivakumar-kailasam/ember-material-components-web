@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import layout from '../../templates/components/mdc-drawer/content';
 
-export default Ember.Component.extend({
+export default Component.extend({
   //region attributes / bindings
   temporary: false,
   permanent: false,

@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { equal } from '@ember/object/computed';
+import Component from '@ember/component';
 import layout from '../../templates/components/mdc-toolbar/section';
 
-export default Ember.Component.extend({
+export default Component.extend({
   //region Attributes
   /**
    * Must be one of `start`,`center`, or `end`
@@ -25,7 +26,7 @@ export default Ember.Component.extend({
   //endregion
 
   //region Computed Properties
-  isAlignStart: Ember.computed.equal('align', 'start'),
-  isAlignEnd: Ember.computed.equal('align', 'end')
+  isAlignStart: equal('align', 'start'),
+  isAlignEnd: equal('align', 'end')
   //endregion
 });

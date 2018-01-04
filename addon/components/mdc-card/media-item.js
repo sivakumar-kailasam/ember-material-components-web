@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { equal } from '@ember/object/computed';
+import Component from '@ember/component';
+import { computed, get } from '@ember/object';
 import layout from '../../templates/components/mdc-card/media-item';
 
-const { get, computed } = Ember;
 const MDC_1x_PIXELS = 80;
 
-export default Ember.Component.extend({
+export default Component.extend({
   //region Attributes
   /**
    * Must be one of `1`, `1.5`, `2`, or `3`.
@@ -39,10 +40,10 @@ export default Ember.Component.extend({
   //endregion
 
   //region Computed Properties
-  isOne: computed.equal('size', 1),
-  isOneDotFive: computed.equal('size', 1.5),
-  isTwo: computed.equal('size', 2),
-  isThree: computed.equal('size', 3),
+  isOne: equal('size', 1),
+  isOneDotFive: equal('size', 1.5),
+  isTwo: equal('size', 2),
+  isThree: equal('size', 3),
   height: computed('size', function() {
     return MDC_1x_PIXELS * get(this, 'size');
   })

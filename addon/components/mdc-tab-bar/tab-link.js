@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import LinkComponent from '@ember/routing/link-component';
+import { observer, get } from '@ember/object';
 import MDCTabComponent from '../../mixins/mdc-tab-component';
 
-const { get, observer } = Ember;
-
-export default Ember.LinkComponent.extend(MDCTabComponent, {
+export default LinkComponent.extend(MDCTabComponent, {
   //region Ember Hooks
   activeClass: 'mdc-tab--active',
   didInsertElement() {

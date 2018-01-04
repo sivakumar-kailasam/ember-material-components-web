@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { set } from '@ember/object';
+import { later } from '@ember/runloop';
 import FreestyleController from 'ember-freestyle/controllers/freestyle';
 
-const { inject } = Ember;
-
 export default FreestyleController.extend({
-  emberFreestyle: inject.service(),
+  emberFreestyle: service(),
   isDemoVisible: true,
   myProgress: 0.5,
   isFirstSwitchOn: true,
@@ -32,13 +32,13 @@ export default FreestyleController.extend({
   },
   actions: {
     alert(what) {
-      Ember.run.later(() => {
+      later(() => {
         window.alert(what);
       }, 300);
       return false;
     },
     logToConsole(eventType) {
-      Ember.set(this, 'eventType', eventType);
+      set(this, 'eventType', eventType);
     }
   }
 });

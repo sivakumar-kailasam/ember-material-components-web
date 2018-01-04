@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import MDCComponent from '../mixins/mdc-component';
 import layout from '../templates/components/mdc-fab';
 
-export default Ember.Component.extend(MDCComponent, {
+export default Component.extend(MDCComponent, {
   //region Attributes
   /**
    * @type {Boolean}

@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import { capitalize } from '@ember/string';
+import { scheduleOnce, next } from '@ember/runloop';
+import { A } from '@ember/array';
+import Mixin from '@ember/object/mixin';
+import { computed, set, get } from '@ember/object';
 import { MDCRippleFoundation } from '@material/ripple';
 import getElementProperty from '../utils/get-element-property';
 import { createRippleAdapter } from '../utils/mdc-ripple-adapter';
 import styleComputed from '../utils/style-computed';
-
-const { get, set, computed } = Ember;
 
 export const addClass = (className, component) => {
   get(component, 'mdcClasses').addObject(className);
@@ -17,12 +19,12 @@ export const removeClass = (className, component) => {
 /**
  * @typedef {Ember.Mixin} MDCComponent
  */
-export const MDCComponent = Ember.Mixin.create({
+export const MDCComponent = Mixin.create({
   //region Ember Hooks
   init() {
     this._super(...arguments);
-    set(this, 'mdcClasses', Ember.A([]));
-    set(this, 'mdcInteractionHandlers', Ember.A([]));
+    set(this, 'mdcClasses', A([]));
+    set(this, 'mdcInteractionHandlers', A([]));
     set(this, 'mdcStyles', {});
   },
 
@@ -32,7 +34,7 @@ export const MDCComponent = Ember.Mixin.create({
     // many components rely on child components registering themselves, which
     // tend to happen in their own didInsertElement hooks that run _after_ the
     // parent's didInsertElement.
-    Ember.run.scheduleOnce('afterRender', this, () => {
+    scheduleOnce('afterRender', this, () => {
       this._attachMdcInteractionHandlers();
       if (get(this, 'createFoundation')) {
         const foundation = this.createFoundation();
@@ -132,14 +134,14 @@ export const MDCComponent = Ember.Mixin.create({
     const foundation = get(this, 'foundation');
     if (!foundation) { return; }
     const value = get(this, prop);
-    const Prop = Ember.String.capitalize(prop);
+    const Prop = capitalize(prop);
     if (!foundation[`is${Prop}`] || foundation[`is${Prop}`]() !== value) {
       foundation[`set${Prop}`](value);
     }
   },
 
   setStyleFor(key, property, value) {
-    Ember.run.next(() => {
+    next(() => {
       if (get(this, 'isDestroyed')) { return; }
 
       set(this, `${key}.${property}`, value);
@@ -159,7 +161,7 @@ export const MDCComponent = Ember.Mixin.create({
   },
 
   registerMdcInteractionHandler(type, handler) {
-    Ember.run.next(() => {
+    next(() => {
       this._detachMdcInteractionHandlers();
       get(this, 'mdcInteractionHandlers').addObject([type, handler]);
       this._attachMdcInteractionHandlers();
@@ -167,7 +169,7 @@ export const MDCComponent = Ember.Mixin.create({
   },
 
   deregisterMdcInteractionHandler(type, handler) {
-    Ember.run.next(() => {
+    next(() => {
       this._detachMdcInteractionHandlers();
       get(this, 'mdcInteractionHandlers').removeObject([type, handler]);
       this._attachMdcInteractionHandlers();

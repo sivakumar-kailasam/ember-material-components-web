@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import MDCTabComponent from '../../mixins/mdc-tab-component';
 
-export default Ember.Component.extend(MDCTabComponent, {
+export default Component.extend(MDCTabComponent, {
   //region Attributes
   /**
    * This property is considered read-only by the component, and will not be

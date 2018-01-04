@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
+import { run } from '@ember/runloop';
 import getElementProperty from '../utils/get-element-property';
 import { util } from '@material/ripple';
 
-const { get, run } = Ember;
 const MATCHES = util.getMatchesProperty(HTMLElement.prototype);
 
 /**

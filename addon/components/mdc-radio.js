@@ -1,13 +1,13 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get } from '@ember/object';
+import { run, scheduleOnce } from '@ember/runloop';
 import layout from '../templates/components/mdc-radio';
 import getElementProperty from '../utils/get-element-property';
 import { MDCComponent } from '../mixins/mdc-component';
 import { MDCRadioFoundation } from '@material/radio';
 import SupportsBubblesFalse from '../mixins/supports-bubbles-false';
 
-const { get, run } = Ember;
-
-export default Ember.Component.extend(MDCComponent, SupportsBubblesFalse, {
+export default Component.extend(MDCComponent, SupportsBubblesFalse, {
   //region Attributes
   /**
    * This property is considered read-only by the component, and will not be
@@ -47,7 +47,7 @@ export default Ember.Component.extend(MDCComponent, SupportsBubblesFalse, {
   layout,
   didRender() {
     this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, () => {
+    scheduleOnce('afterRender', this, () => {
       this.sync('checked');
       this.sync('disabled');
     });

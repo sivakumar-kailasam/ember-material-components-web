@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import { equal } from '@ember/object/computed';
+import Component from '@ember/component';
+import { get, computed } from '@ember/object';
 import layout from '../../../templates/components/mdc-layout-grid/inner/cell';
 
-const { computed, get } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   //region Attributes
   /**
    * @type {Number}
@@ -68,8 +68,8 @@ export default Ember.Component.extend({
     const span = get(this, 'span-phone');
     return parseInt(span) ? `mdc-layout-grid__cell--span-${span}-phone` : null;
   }),
-  isAlignTop: computed.equal('align', 'top'),
-  isAlignMiddle: computed.equal('align', 'middle'),
-  isAlignBottom: computed.equal('align', 'bottom')
+  isAlignTop: equal('align', 'top'),
+  isAlignMiddle: equal('align', 'middle'),
+  isAlignBottom: equal('align', 'bottom')
   //endregion
 });

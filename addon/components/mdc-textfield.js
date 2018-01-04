@@ -1,15 +1,23 @@
-import Ember from 'ember';
+import { bool } from '@ember/object/computed';
+import { camelize } from '@ember/string';
+import { A } from '@ember/array';
+import Component from '@ember/component';
+import { computed, set, get } from '@ember/object';
+import { isPresent } from '@ember/utils';
 import layout from '../templates/components/mdc-textfield';
-import { MDCComponent, addClass, removeClass } from '../mixins/mdc-component';
+import {
+  MDCComponent,
+  addClass,
+  removeClass
+} from '../mixins/mdc-component';
 import getElementProperty from '../utils/get-element-property';
 import { MDCTextfieldFoundation } from '@material/textfield';
 import { util } from '@material/ripple';
 
 const MATCHES = util.getMatchesProperty(HTMLElement.prototype);
 const { cssClasses } = MDCTextfieldFoundation;
-const { get, set, computed, isPresent } = Ember;
 
-export default Ember.Component.extend(MDCComponent, {
+export default Component.extend(MDCComponent, {
   //region Attributes
   /**
    * This property is considered read-only by the component, and will not be
@@ -120,7 +128,7 @@ export default Ember.Component.extend(MDCComponent, {
       'inputBlurHandlers',
       'inputInputHandlers',
       'inputKeydownHandlers'
-    ].forEach(prop => set(this, prop, Ember.A([])));
+    ].forEach(prop => set(this, prop, A([])));
     this._super(...arguments);
   },
   //endregion
@@ -174,16 +182,16 @@ export default Ember.Component.extend(MDCComponent, {
   /**
    * @type {String}
    */
-  ripple: computed.bool('box'),
+  ripple: bool('box'),
   labelClassnames: computed('value', 'labelClasses.[]', function() {
-    const classnames = Ember.A([]);
+    const classnames = A([]);
     if (get(this, 'value')) {
       classnames.addObject(cssClasses.LABEL_FLOAT_ABOVE);
     }
     return classnames.concat(get(this, 'labelClasses')).join(' ');
   }),
   helptextClassnames: computed('helptext-persistent', 'helptext-validation-msg', function() {
-    const classnames = Ember.A([]);
+    const classnames = A([]);
     if (get(this, 'helptext-persistent')) {
       classnames.addObject(cssClasses.HELPTEXT_PERSISTENT);
     }
@@ -270,7 +278,7 @@ export default Ember.Component.extend(MDCComponent, {
       if (isPresent(eventHandler)) {
         eventHandler(ev);
       }
-      get(this, Ember.String.camelize(`input ${type} handlers`)).forEach(handler => handler(ev));
+      get(this, camelize(`input ${type} handlers`)).forEach(handler => handler(ev));
     },
     handleInput(ev) {
       this.send('handle', 'input', ev);

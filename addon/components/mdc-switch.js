@@ -1,10 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get } from '@ember/object';
 import layout from '../templates/components/mdc-switch';
 import SupportsBubblesFalse from '../mixins/supports-bubbles-false';
 
-const { get } = Ember;
-
-export default Ember.Component.extend(SupportsBubblesFalse, {
+export default Component.extend(SupportsBubblesFalse, {
   //region Attributes
   /**
    * This property is considered read-only by the component, and will not be

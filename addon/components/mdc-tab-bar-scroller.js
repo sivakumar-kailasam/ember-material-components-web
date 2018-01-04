@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { set, get, computed } from '@ember/object';
 import { MDCTabBarScrollerFoundation } from '@material/tabs';
 import { getCorrectPropertyName } from '@material/animation';
 import { MDCComponent } from '../mixins/mdc-component';
@@ -7,10 +10,9 @@ import getElementProperty from '../utils/get-element-property';
 import getComponentProperty from '../utils/get-component-property';
 import styleComputed from '../utils/style-computed';
 
-const { computed, get, run, set } = Ember;
 const { cssClasses, strings } = MDCTabBarScrollerFoundation;
 
-export default Ember.Component.extend(MDCComponent, {
+export default Component.extend(MDCComponent, {
   //region Attributes
   /**
    * Pass as true for white text on a darker background
@@ -25,8 +27,8 @@ export default Ember.Component.extend(MDCComponent, {
   layout,
   init() {
     this._super(...arguments);
-    set(this, 'backIndicatorClasses', Ember.A([]));
-    set(this, 'forwardIndicatorClasses', Ember.A([]));
+    set(this, 'backIndicatorClasses', A([]));
+    set(this, 'forwardIndicatorClasses', A([]));
     set(this, 'mdcScrollFrameStyles', {});
   },
   didInsertElement() {
