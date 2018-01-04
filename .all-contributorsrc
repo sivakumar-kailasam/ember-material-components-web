@@ -82,6 +82,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "scottosmith",
+      "name": "Scott Smith",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/5567126?v=4",
+      "profile": "http://www.secondstreet.com",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
