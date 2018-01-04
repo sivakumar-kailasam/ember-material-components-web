@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import { equal } from '@ember/object/computed';
+import Component from '@ember/component';
 import layout from '../templates/components/mdc-layout-grid';
 
-const { computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   //region Attributes
   /**
    * @type {Boolean}
@@ -27,7 +26,7 @@ export default Ember.Component.extend({
   //endregion
 
   //region Computed Properties
-  isAlignLeft: computed.equal('align', 'left'),
-  isAlignRight: computed.equal('align', 'right')
+  isAlignLeft: equal('align', 'left'),
+  isAlignRight: equal('align', 'right')
   //endregion
 });

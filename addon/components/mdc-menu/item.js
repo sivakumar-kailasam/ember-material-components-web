@@ -1,12 +1,11 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get } from '@ember/object';
 import layout from '../../templates/components/mdc-menu/item';
-
-const { get } = Ember;
 
 /**
  * @typedef {Ember.Component} MDCMenuItemComponent
  */
-export default Ember.Component.extend({
+export default Component.extend({
   //region Attributes
   /**
    * @type {MDCMenuComponent}

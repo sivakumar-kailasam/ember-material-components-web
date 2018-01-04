@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, get } from '@ember/object';
 import layout from '../templates/components/mdc-elevation';
 
-const { get, computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   //region Attributes
   /*
    * A number between 0 and 24

@@ -1,12 +1,13 @@
-/*jshint node:true*/
-/* global require, module */
-var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+'use strict';
+
+const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  var app = new EmberAddon(defaults, {
+  let app = new EmberAddon(defaults, {
     freestyle: {
       snippetSearchPaths: ['addon', 'tests/dummy/app']
     }
+    // Add options here
   });
 
   /*

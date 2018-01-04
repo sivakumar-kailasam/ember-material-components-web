@@ -1,13 +1,18 @@
-import Ember from 'ember';
+import { scheduleOnce } from '@ember/runloop';
+import Component from '@ember/component';
+import { set, get } from '@ember/object';
 import layout from '../templates/components/mdc-icon-toggle';
-import { MDCComponent, addClass, removeClass } from '../mixins/mdc-component';
+import {
+  MDCComponent,
+  addClass,
+  removeClass
+} from '../mixins/mdc-component';
 import getElementProperty from '../utils/get-element-property';
 import { MDCIconToggleFoundation } from '@material/icon-toggle';
 
-const { get, set } = Ember;
 const { strings: { DATA_TOGGLE_ON, DATA_TOGGLE_OFF, ARIA_PRESSED, ARIA_DISABLED, ARIA_LABEL } } = MDCIconToggleFoundation;
 
-export default Ember.Component.extend(MDCComponent, {
+export default Component.extend(MDCComponent, {
   //region Attributes
   /**
    * This property is considered read-only by the component, and will not be
@@ -42,7 +47,7 @@ export default Ember.Component.extend(MDCComponent, {
   layout,
   didRender() {
     this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, () => {
+    scheduleOnce('afterRender', this, () => {
       this.sync('disabled');
       this.syncPressed();
     });

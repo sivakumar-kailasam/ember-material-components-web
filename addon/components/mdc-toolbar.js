@@ -1,15 +1,17 @@
-import Ember from 'ember';
+import { readOnly } from '@ember/object/computed';
+import { A } from '@ember/array';
+import Component from '@ember/component';
+import { set, get } from '@ember/object';
+import { run } from '@ember/runloop';
 import layout from '../templates/components/mdc-toolbar';
 import { MDCToolbarFoundation, util } from '@material/toolbar';
 import { MDCComponent } from '../mixins/mdc-component';
 import getElementProperty from '../utils/get-element-property';
 import styleComputed from '../utils/style-computed';
 
-const { get, set, run } = Ember;
-
 const { cssClasses, strings } = MDCToolbarFoundation;
 
-export default Ember.Component.extend(MDCComponent, {
+export default Component.extend(MDCComponent, {
   //region Attributes
   /**
    * @type {Boolean}
@@ -46,7 +48,7 @@ export default Ember.Component.extend(MDCComponent, {
     this._super(...arguments);
     set(this, 'mdcTitleStyles', {});
     set(this, 'mdcFirstRowStyles', {});
-    set(this, 'rows', Ember.A([]));
+    set(this, 'rows', A([]));
   },
   attributeBindings: ['style'],
   //endregion
@@ -71,7 +73,7 @@ export default Ember.Component.extend(MDCComponent, {
   //region Computed Properties
   titleStyle: styleComputed('mdcTitleStyles'),
   firstRowStyle: styleComputed('mdcFirstRowStyles'),
-  firstRow: Ember.computed.readOnly('rows.firstObject'),
+  firstRow: readOnly('rows.firstObject'),
   //endregion
 
   //region Methods

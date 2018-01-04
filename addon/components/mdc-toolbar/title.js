@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { readOnly } from '@ember/object/computed';
+import Component from '@ember/component';
 import layout from '../../templates/components/mdc-toolbar/title';
 
-export default Ember.Component.extend({
+export default Component.extend({
   //region Ember Hooks
   layout,
   classNames: ['mdc-toolbar__title'],
@@ -9,6 +10,6 @@ export default Ember.Component.extend({
   //endregion
 
   //region Computed Properties
-  style: Ember.computed.readOnly('title-style')
+  style: readOnly('title-style')
   //endregion
 });

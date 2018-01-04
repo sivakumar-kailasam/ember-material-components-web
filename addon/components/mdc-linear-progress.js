@@ -1,15 +1,15 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { set, get } from '@ember/object';
 import layout from '../templates/components/mdc-linear-progress';
 import { MDCLinearProgressFoundation } from '@material/linear-progress';
 import { MDCComponent } from '../mixins/mdc-component';
 import getElementProperty from '../utils/get-element-property';
 import styleComputed from '../utils/style-computed';
 
-const { get, run, set } = Ember;
-
 const { cssClasses, strings } = MDCLinearProgressFoundation;
 
-export default Ember.Component.extend(MDCComponent, {
+export default Component.extend(MDCComponent, {
   //region Attributes
   /**
    * @type {Boolean}
@@ -78,8 +78,8 @@ export default Ember.Component.extend(MDCComponent, {
   createFoundation() {
     return new MDCLinearProgressFoundation({
       hasClass: (className) => get(this, 'mdcClasses').includes(className),
-      addClass: (className) => Ember.run(() => get(this, 'mdcClasses').addObject(className)),
-      removeClass: (className) => Ember.run(() => get(this, 'mdcClasses').removeObject(className)),
+      addClass: (className) => run(() => get(this, 'mdcClasses').addObject(className)),
+      removeClass: (className) => run(() => get(this, 'mdcClasses').removeObject(className)),
       getPrimaryBar: () => getElementProperty(this, 'querySelector')(strings.PRIMARY_BAR_SELECTOR),
       getBuffer: () => getElementProperty(this, 'querySelector')(strings.BUFFER_SELECTOR),
       setStyle: (el, property, value) => {

@@ -1,4 +1,4 @@
-/* jshint node: true */
+/* eslint-disable node/no-extraneous-require */
 'use strict';
 
 const mergeTrees = require('broccoli-merge-trees');
@@ -93,6 +93,7 @@ module.exports = {
   }
 };
 
+/* eslint-disable */
 /*!
  * The camelize function and its RegExps are under the MIT License
  * Copyright (c) 2016 Yehuda Katz, Tom Dale and Ember.js contributors

@@ -1,4 +1,8 @@
-import Ember from 'ember';
+import { equal } from '@ember/object/computed';
+import { A } from '@ember/array';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { set, observer, getProperties, get } from '@ember/object';
 import layout from '../templates/components/mdc-tab-bar';
 import { MDCTabBarFoundation } from '@material/tabs';
 import { MDCComponent } from '../mixins/mdc-component';
@@ -6,10 +10,9 @@ import getElementProperty from '../utils/get-element-property';
 import getComponentProperty from '../utils/get-component-property';
 import styleComputed from '../utils/style-computed';
 
-const { computed, get, getProperties, observer, run, set } = Ember;
 const { strings } = MDCTabBarFoundation;
 
-export default Ember.Component.extend(MDCComponent, {
+export default Component.extend(MDCComponent, {
   //region Attributes
   /**
    * @type {Boolean}
@@ -51,7 +54,7 @@ export default Ember.Component.extend(MDCComponent, {
   attributeBindings: ['style'],
   init() {
     this._super(...arguments);
-    set(this, 'tabs', Ember.A([]));
+    set(this, 'tabs', A([]));
     set(this, 'mdcIndicatorStyles', {});
   },
   didInsertElement() {
@@ -78,8 +81,8 @@ export default Ember.Component.extend(MDCComponent, {
 
   //region Computed Properties
   indicatorStyle: styleComputed('mdcIndicatorStyles'),
-  isIconsOnly: computed.equal('icons', 'only'),
-  isIconsWithText: computed.equal('icons', 'with-text'),
+  isIconsOnly: equal('icons', 'only'),
+  isIconsWithText: equal('icons', 'with-text'),
   //endregion
 
   //region Observers

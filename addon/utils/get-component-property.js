@@ -1,6 +1,4 @@
-import Ember from 'ember';
-
-const { get } = Ember;
+import { get } from '@ember/object';
 
 /**
  * Safely attempts to read a property from the component,

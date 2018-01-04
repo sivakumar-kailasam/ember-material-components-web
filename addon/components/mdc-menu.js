@@ -1,17 +1,19 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { set, get } from '@ember/object';
 import layout from '../templates/components/mdc-menu';
 import { MDCComponent } from '../mixins/mdc-component';
 import styleComputed from '../utils/style-computed';
 import { MDCSimpleMenuFoundation, util } from '@material/menu';
 
-const { get, run, set } = Ember;
 const { strings } = MDCSimpleMenuFoundation;
 const TRANSFORM_PROPERTY = util.getTransformPropertyName(window);
 
 /**
  * @typedef {Ember.Component} MDCMenuComponent
  */
-export default Ember.Component.extend(MDCComponent, {
+export default Component.extend(MDCComponent, {
   //region Attributes
   /**
    * @type {Boolean}
@@ -38,8 +40,8 @@ export default Ember.Component.extend(MDCComponent, {
   //region Ember Hooks
   init() {
     this._super(...arguments);
-    set(this, 'items', Ember.A([]));
-    set(this, 'itemStyles', Ember.A([]));
+    set(this, 'items', A([]));
+    set(this, 'itemStyles', A([]));
   },
   didInsertElement() {
     this._super(...arguments);

@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get, computed } from '@ember/object';
 import layout from '../../templates/components/mdc-toolbar/row';
 
-const { get } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   //region Ember Hooks
   layout,
   classNames: ['mdc-toolbar__row'],
@@ -17,13 +16,13 @@ export default Ember.Component.extend({
   //endregion
 
   //region Computed Properties
-  style: Ember.computed('isFirstRow', 'first-row-style', function() {
+  style: computed('isFirstRow', 'first-row-style', function() {
     if (get(this, 'isFirstRow')) {
       return get(this, 'first-row-style');
     }
     return null;
   }),
-  isFirstRow: Ember.computed('first-row', function() {
+  isFirstRow: computed('first-row', function() {
     return get(this, 'first-row') === this;
   })
   //endregion

@@ -1,10 +1,15 @@
-import Ember from 'ember';
+import EmberError from '@ember/error';
+import { A } from '@ember/array';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { set, getProperties, get, computed } from '@ember/object';
 import { MDCComponent } from '../mixins/mdc-component';
 import getElementProperty from '../utils/get-element-property';
-import { MDCTemporaryDrawerFoundation, MDCPersistentDrawerFoundation } from '@material/drawer';
+import {
+  MDCTemporaryDrawerFoundation,
+  MDCPersistentDrawerFoundation
+} from '@material/drawer';
 import layout from '../templates/components/mdc-drawer';
-
-const { Component, computed, get, getProperties, run, set } = Ember;
 
 export default Component.extend(MDCComponent, {
 //region Ember Hooks
@@ -14,7 +19,7 @@ export default Component.extend(MDCComponent, {
 
   init() {
     this._super(...arguments);
-    set(this, 'changeHandlers', Ember.A([]));
+    set(this, 'changeHandlers', A([]));
   },
 
   didInsertElement() {
@@ -52,7 +57,7 @@ export default Component.extend(MDCComponent, {
   isPermanent: computed('permanent', 'persistent', 'temporary', function () {
     const { permanent, persistent, temporary } = getProperties(this, 'permanent', 'persistent', 'temporary');
     if (permanent && (temporary || persistent)) {
-      throw new Ember.Error('Cannot be permanent and temporary or persistent');
+      throw new EmberError('Cannot be permanent and temporary or persistent');
     }
     return permanent;
   }),

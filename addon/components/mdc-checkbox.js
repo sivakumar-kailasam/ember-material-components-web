@@ -1,14 +1,20 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import Component from '@ember/component';
+import { set, get } from '@ember/object';
+import { run, scheduleOnce } from '@ember/runloop';
 import layout from '../templates/components/mdc-checkbox';
-import { addClass, removeClass, MDCComponent } from '../mixins/mdc-component';
+import {
+  addClass,
+  removeClass,
+  MDCComponent
+} from '../mixins/mdc-component';
 import getElementProperty from '../utils/get-element-property';
 import { MDCCheckboxFoundation } from '@material/checkbox';
 import SupportsBubblesFalse from '../mixins/supports-bubbles-false';
 
 const { ANIM_END_EVENT_NAME } = MDCCheckboxFoundation.strings;
-const { get, set, run } = Ember;
 
-export default Ember.Component.extend(MDCComponent, SupportsBubblesFalse, {
+export default Component.extend(MDCComponent, SupportsBubblesFalse, {
   //region Attributes
   /**
    * This property is considered read-only by the component, and will not be
@@ -54,11 +60,11 @@ export default Ember.Component.extend(MDCComponent, SupportsBubblesFalse, {
   layout,
   init() {
     this._super(...arguments);
-    set(this, 'changeHandlers', Ember.A([]));
+    set(this, 'changeHandlers', A([]));
   },
   didRender() {
     this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, () => {
+    scheduleOnce('afterRender', this, () => {
       this.sync('checked');
       this.sync('indeterminate');
       this.sync('disabled');
