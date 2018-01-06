@@ -1,7 +1,7 @@
 import { A } from '@ember/array';
 import Component from '@ember/component';
 import { set, get } from '@ember/object';
-import { run, scheduleOnce } from '@ember/runloop';
+import { run, next, scheduleOnce } from '@ember/runloop';
 import layout from '../templates/components/mdc-checkbox';
 import {
   addClass,
@@ -86,8 +86,8 @@ export default Component.extend(MDCComponent, SupportsBubblesFalse, {
    */
   createFoundation() {
     return new MDCCheckboxFoundation({
-      addClass: (className) => run(() => addClass(className, this)),
-      removeClass: (className) => run(() => removeClass(className, this)),
+      addClass: (className) => next(() => addClass(className, this)),
+      removeClass: (className) => next(() => removeClass(className, this)),
       registerAnimationEndHandler: (handler) => getElementProperty(this, 'addEventListener', () => null)(ANIM_END_EVENT_NAME, handler),
       deregisterAnimationEndHandler: (handler) => getElementProperty(this, 'removeEventListener', () => null)(ANIM_END_EVENT_NAME, handler),
       registerChangeHandler: (handler) => run(() => get(this, 'changeHandlers').addObject(handler)),
