@@ -91,6 +91,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "marclundgren",
+      "name": "Marc Lundgren",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1154834?v=4",
+      "profile": "http://marclundgren.github.io/",
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
