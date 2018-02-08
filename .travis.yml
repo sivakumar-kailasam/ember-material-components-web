@@ -45,7 +45,7 @@ script:
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
 
 before_deploy:
-  - node_modules/.bin/ember build production
+  - node_modules/.bin/ember build --environment=production
 
 deploy:
   provider: pages
@@ -54,3 +54,4 @@ deploy:
   local_dir: ./dist
   on:
     branch: master
+    condition: $EMBER_TRY_SCENARIO = ember-release
