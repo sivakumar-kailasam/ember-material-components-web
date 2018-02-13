@@ -24,7 +24,7 @@ test('it renders', function(assert) {
   `);
 
   assert.equal(find('*').textContent.trim(), 'template block text');
-  assert.ok(this.$('.mdc-tab-bar .mdc-tab-bar__indicator'), 'tab bar indicator appears');
+  assert.ok(find('.mdc-tab-bar .mdc-tab-bar__indicator'), 'tab bar indicator appears');
 
   assert.ok(find('.mdc-tab-bar .mdc-tab-bar__indicator').classList.contains('foo'), 'custom class names can be passed into the indicator');
 });
