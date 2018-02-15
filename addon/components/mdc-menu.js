@@ -107,9 +107,9 @@ export default Component.extend(MDCComponent, {
       addClass: className => run(() => get(this, 'mdcClasses').addObject(className)),
       removeClass: className => run(() => get(this, 'mdcClasses').removeObject(className)),
       hasClass: className => get(this, 'element.classList').contains(className),
-      hasNecessaryDom: () => !!get(this , 'element') && !!this.$(strings.ITEMS_SELECTOR).length,
+      hasNecessaryDom: () => !!get(this , 'element') && !!this.element.querySelectorAll(strings.ITEMS_SELECTOR).length,
       getInnerDimensions: () => {
-        const $items = this.$(strings.ITEMS_SELECTOR);
+        const $items = this.element.querySelectorAll(strings.ITEMS_SELECTOR);
         return { width: $items.width(), height: $items.height(), };
       },
       hasAnchor: () => get(this, 'anchor'),

@@ -15,11 +15,10 @@ module.exports = {
     browser: true
   },
   rules: {
-    // 'ember/no-jquery': 'error',
-    'ember/avoid-leaking-state-in-ember-objects': "off"
-    // 'ember/avoid-leaking-state-in-ember-objects': [1, [
-    //   'colorPalette'
-    // ]]
+    'ember/no-jquery': 'error',
+    'ember/avoid-leaking-state-in-ember-objects': [1, [
+      'colorPalette'
+    ]]
   },
   overrides: [
     // node files
