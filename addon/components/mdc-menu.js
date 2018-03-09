@@ -109,8 +109,12 @@ export default Component.extend(MDCComponent, {
       hasClass: className => get(this, 'element.classList').contains(className),
       hasNecessaryDom: () => !!get(this , 'element') && !!this.element.querySelectorAll(strings.ITEMS_SELECTOR).length,
       getInnerDimensions: () => {
-        const $items = this.element.querySelectorAll(strings.ITEMS_SELECTOR);
-        return { width: $items.width(), height: $items.height(), };
+        let item = this.element.querySelector(strings.ITEMS_SELECTOR);
+        if (!item) {
+          return { width: 0, height: 0 };
+        }
+        let { height, width } = item.getBoundingClientRect();
+        return { width, height };
       },
       hasAnchor: () => get(this, 'anchor'),
       getAnchorDimensions: () => get(this, 'anchor').getAnchorDimensions(),
